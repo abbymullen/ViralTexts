@@ -18,9 +18,16 @@ cumulative_freq$year <- cumulative_freq$year_range %>%
   as.character %>%
   gsub(".*([0-9]{4}).*","\\1",.)
 
-p <- ggplot(cumulative_freq, aes(x=year, y=starts.cumfreq))
+freq <- data.frame(year = 1837:1860, cumulative = as.vector(cumulative_freq$starts.cumfreq))
+
+p <- ggplot(freq, aes(x=year, y=cumulative))
 p + geom_point() +
   xlab("Year") +
   ylab("Cumulative number of papers") +
   ggtitle("Cumulative Number of Papers in CA by Date")
 
+r <- ggplot(freq, aes(x=year)) 
+r + geom_area(aes(y=cumulative)) +
+  xlab("Year") +
+  ylab("Cumulative number of papers") +
+  ggtitle("Cumulative Number of Papers in CA by Date")
