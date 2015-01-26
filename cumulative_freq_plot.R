@@ -5,7 +5,9 @@ dates <- read.csv("Papers_start_end.csv", sep=',')
 
 starts <- dates$CA_start
 
-starts_freq <- table(starts)
+starts_freq <- as.data.frame(table(starts))
+
+write.csv(starts_freq, file = "starts_freq.csv")
 
 breaks <- seq(1836, 1861, by=1)
 starts.cut <- cut(starts, breaks, right=FALSE)
@@ -16,13 +18,16 @@ cumulative_freq <- as.data.frame(cumulative)
 write.csv(cumulative_freq, file = "Cumulative_Frequency.csv")
 
 cumulative_freq <- read.csv('Cumulative_Frequency.csv', sep=',')
+freq_start <- read.csv('starts_freq.csv', sep=',')
 
 cumulative_freq$year <- cumulative_freq$year_range %>%
   as.character %>%
   sub(".([0-9]{4}).*",'\\1',.)
 
 
+
 freq <- data.frame(year = 1836:1860, cumulative = as.vector(cumulative_freq$starts.cumfreq))
+freq <- merge(freq, freq_start, by='year')
 
 p <- ggplot(freq, aes(x=year, y=cumulative))
 p + geom_point() +
@@ -31,7 +36,8 @@ p + geom_point() +
   ggtitle("Cumulative Number of Papers in CA by Date")
 
 r <- ggplot(freq, aes(x=year)) 
-r + geom_area(aes(y=cumulative), fill='gray', colour='black') +
+r + geom_area(aes(y=cumulative), fill='gray') +
+  geom_line(aes(y=Freq)) +
   xlab("Year") +
   ylab("Cumulative number of papers") +
   ggtitle("Cumulative Number of Papers in CA by Date")
