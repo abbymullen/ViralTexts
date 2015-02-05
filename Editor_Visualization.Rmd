@@ -1,0 +1,17 @@
+---
+title: "Visualizing Attribution"
+author: "Abby Mullen"
+date: "02/03/2015"
+output: html_document
+---
+```{r}
+library(dplyr)
+library(ggplot2)
+
+f = read.csv('editing_newspapers.csv')
+
+f$year = f$Date %>%
+  gsub('.*([0-9]{4}).*','\\1',.)
+
+p <- ggplot(f, aes(x=year,y=ID,colour=as.character(ID)))
+p + geom_jitter(position=position_jitter(height=.25)) + scale_y_discrete(labels = c("none","Alexandria Gazette","Literary Journal","Louisville Courier-Journal","Mobile Register","Munc Telegraph","National Intelligencer","New York Sun")) 
