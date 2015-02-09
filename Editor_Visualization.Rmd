@@ -25,6 +25,7 @@ p <- ggplot(f, aes(x=Date,y=attribution,colour=as.character(attribution)))
 p + scale_x_date(breaks = date_breaks("year"), labels = date_format("%Y")) +
   scale_colour_discrete(name  = "Attribution") +
   geom_point() +
-  theme(axis.text.x  = element_text(angle=90, vjust=0.5))
+  theme(axis.text.x  = element_text(angle=90, vjust=0.5)) +
+  labs(title = "Attributions by Year")
 
 
