@@ -1,0 +1,31 @@
+---
+title: "Visualizing Attribution"
+author: "Abby Mullen"
+date: "02/03/2015"
+output: html_document
+---
+```{r}
+library(dplyr)
+library(ggplot2)
+library(scales)
+
+f = read.csv('Webster-Longstreet.csv')
+
+f$Date = f$Date %>%
+  gsub('([0-9]+)/([0-9]+)/([0-9]{4})','\\3-\\1-\\2',.) %>%
+  as.Date()
+
+f$year = f$Date %>%
+  gsub('.*([0-9]{4}).*','\\1',.)
+
+f = f %>%
+  arrange(Date,Personal_Attribution)
+
+p <- ggplot(f, aes(x=Date,y=Personal_Attribution,colour=as.character(Personal_Attribution)))
+p + scale_x_date(breaks = date_breaks("year"), labels = date_format("%Y")) +
+  scale_colour_discrete(name  = "Attribution") +
+  geom_point() +
+  theme(axis.text.x  = element_text(angle=90, vjust=0.5)) +
+  labs(title = "Attributions by Year")
+ggsave(file = "attributions_by_year_Webster.png", width=10,height=5)
+
