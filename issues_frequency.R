@@ -4,9 +4,10 @@ library(scales)
 library(RColorBrewer)
 library(grid)
 
-dates <- read.csv("pre1861-ca-dates.tsv", sep='\t', header=FALSE)
+dates <- read.csv("pre1861-ca-moa-dates.tsv", sep='\t', header=FALSE) 
 
 colnames(dates) <- c("Year","Frequency")
+dates <- dates  %>% filter(Year < 1861, Year > 1835)
 
 fte_theme <- function() {
   
