@@ -37,11 +37,11 @@ fte_theme <- function() {
     theme(legend.text = element_text(size=7,color=color.axis.title)) +
     
     # Set title and axis labels, and format these and tick marks
-    theme(plot.title=element_text(color=color.title, size=14, vjust=1.25)) +
-    theme(axis.text.x=element_text(size=7,color=color.axis.text)) +
-    theme(axis.text.y=element_text(size=7,color=color.axis.text)) +
-    theme(axis.title.x=element_text(size=10,color=color.axis.title, vjust=0)) +
-    theme(axis.title.y=element_text(size=10,color=color.axis.title, vjust=1.25)) +
+    theme(plot.title=element_text(color=color.title, size=16, vjust=1.25)) +
+    theme(axis.text.x=element_text(size=10,color=color.axis.text)) +
+    theme(axis.text.y=element_text(size=10,color=color.axis.text)) +
+    theme(axis.title.x=element_text(size=12,color=color.axis.title, vjust=0)) +
+    theme(axis.title.y=element_text(size=12,color=color.axis.title, vjust=1.25)) +
     
     # Plot margins
     theme(plot.margin = unit(c(0.35, 0.2, 0.3, 0.35), "cm"))
@@ -51,4 +51,4 @@ ggplot(dates, aes(x=Year)) +
   geom_area(aes(y=Frequency), fill='navy') +
   fte_theme() +
   ggtitle("Number of issues in Viral Texts data by year") + 
-  ylab("Number of issues")
+  ylab("Number of issues") 
