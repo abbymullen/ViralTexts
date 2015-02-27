@@ -1,13 +1,13 @@
 library(ggplot2)
 library(dplyr)
 
-dates <- read.csv("Papers_start_end.csv", sep=',')
+dates <- read.csv("pre1861-ca-dates.tsv", sep='\t', header=FALSE)
 
 starts <- dates$CA_start
 
 starts_freq <- as.data.frame(table(starts))
 
-write.csv(starts_freq, file = "starts_freq.csv")
+write.csv(starts_freq, file = "issues_starts_freq.csv")
 
 breaks <- seq(1836, 1861, by=1)
 starts.cut <- cut(starts, breaks, right=FALSE)
