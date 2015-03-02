@@ -1,17 +1,5 @@
 import re
 
-def issueyielder(filename):
-	text = open(filename, "r")
-	a = text.readlines()
-	p = "".join(a)
-
-	docbreaks = p.split("<doc>")
-
-	for issue in docbreaks:
-		yield issue
-
-
-
 class Issue():
 	def __init__(self, doc):
 		self.doc = doc
@@ -19,24 +7,25 @@ class Issue():
 	def attribution(self,word):
 		match = re.search(r"[Ff]rom t[hilb]+e (\w*\.*\s*\w*\.*\s*" + word + ")", self.doc)
 		if match:
-			match = re.sub("\n"," ",match.group(1))
-			return match
+			#match = re.sub("\n"," ",match.group(1))
+			return match.group()
 		match = re.search(r"The (\w*\.*\s*\w*\.*\s*" + word + ")\s\w*\s*says", self.doc)
 		if match:
-			match = re.sub("\n"," ",match.group(1))
-			return match
+			#match = re.sub("\n"," ",match.group(1))
+			return match.group()
 		match = re.search(r"special to the (\w*\.*\s*\w*\.*\s*" + word + ")", self.doc)
 		if match:
-	 		match = re.sub("\n"," ",match.group(1))
-	 		return match
+	 		#match = re.sub("\n"," ",match.group(1))
+	 		return match.group()
 	 	match = re.search(r"[Bb]y the last (\w*\.*\s*\w*\.*\s*" + word + ")", self.doc)
 	 	if match: 
-	 		match = re.sub("\n"," ",match.group(1))
-	 		return match
-	 	match = re.search("the correspondent of the (\w*\.*\s*\w*\.*\s*" + word + ")", self.doc)
+	 		#match = re.sub("\n"," ",match.group(1))
+	 		return match.group()
+	 	match = re.search(r"the correspondent of the (\w*\.*\s*\w*\.*\s*" + word + ")", self.doc)
 	 	if match: 
-	 		match = re.sub("\n"," ",match.group(1))
-	 		return match
+	 		#match = re.sub("\n"," ",match.group(1))
+	 		return match.group()
+
 		return ""
 
 	def date(self):
@@ -45,18 +34,25 @@ class Issue():
 			return match.group(1)
 
 
+def issueyielder(filename,attr_list):
+	text = open(filename, "r")
+	a = text.readlines()
+	p = "".join(a)
 
-if __name__=="__main__":
-	generator = issueyielder("edit_batch_wvu_austria_ver01.pbd.metatext")
+	docbreaks = p.split("<doc>")
+	attr_list = open(attr_list, "a")
 	name_list = [line.strip() for line in open('attributions_names_WDI.csv')]
-	attr_list = open("attributions_list.txt_2", "a")
-	for issue in generator:
-		issue = generator.next()
+
+	for issue in docbreaks:
 		paper = Issue(issue)
 		for term in name_list:
 			attr = paper.attribution(term)
 			date = paper.date()
-
 			if attr != "":
 				attr_list.write(date + "\t" + attr + '\n')
+
 	attr_list.close()
+
+if __name__=="__main__":
+	generator = issueyielder("25K_WDI.txt","attr_test.txt")
+	# print generator
