@@ -6,6 +6,7 @@ def issueyielder(filename):
 	p = "".join(a)
 
 	docbreaks = p.split("<doc>")
+	
 
 	for issue in docbreaks:
 		yield issue
