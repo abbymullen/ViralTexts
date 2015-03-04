@@ -5,7 +5,7 @@ class Issue():
 		self.doc = doc
 
 	def attribution(self,word):
-		match = re.search(r"[Ff]rom [Tthlibe\?]+ (\w*\.*\s*\w*\.*\s*" + word + ")", self.doc)
+		match = re.search(r"[Ff]rom [Tthlibe\?]+ ([\w\s\.]*" + word + ")", self.doc)
 		if match:
 			return match.group()
 		match = re.search(r"[Tthlibe\?]+ (\w*\.*\s*\w*\.*\s*" + word + ")\s\w*\s*says", self.doc)
@@ -29,15 +29,12 @@ class Issue():
 	 	match = re.search(r"[Tthlibe\?]+ (\w*\.*\s*\w*\.*\s*" + word + ")\s\w*\s*remarks", self.doc)
 		if match:
 			return match.group()
-		match = re.search(r"[Tthlibe\?]+ (\w*\.*\s*\w*\.*\s*" + word + ")of the", self.doc)
+		match = re.search(r"[Tthlibe\?]+ (\w*\.*\s*\w*\.*\s*" + word + ")\sof the", self.doc)
 		if match:
 			return match.group()
-		# match = re.search(r"[Ff]rom [Tthlibe\?]+ (\w+\.*\s*\w*\.*\s*Union)",self.doc)
-		# if match:
-		# 	return match.group()
-		# match = re.search(r"[Ff]rom [Tthlibe\?]+ (\w+\.*\s*\w*\.*\s*World)",self.doc)
-		# if match:
-		# 	return match.group()
+		match = re.search(r"[Tthlibe\?]+ (\w*\.*\s*\w*\.*\s*" + word + ")\sgives [Tthlibe\?]+ follow.*ing", self.doc)
+		if match:
+			return match.group()
 		return ""
 
 	def date(self):
@@ -69,3 +66,8 @@ def issueyielder(filename,attr_list):
 if __name__=="__main__":
 	generator = issueyielder("edit_batch_wvu_austria_ver01.pbd.metatext","attr_WDI_03032015.txt")
 	# print generator
+
+
+def cleanup(attribution):
+	for line in attribution:
+		pass
