@@ -53,3 +53,4 @@ ggplot(dates, aes(x=Year)) +
   fte_theme() +
   ggtitle("Number of issues in Viral Texts data by year") + 
   ylab("Number of issues") 
+ggsave(file = "ViralTextsDataByYear.png", width=10,height=5)
