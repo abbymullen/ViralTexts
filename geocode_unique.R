@@ -14,6 +14,7 @@ text = read.csv("FullC19-working notes (1).csv"
   mutate(text = V5) %>% 
   select(date,year,paper_title,text,location)
 
+#this finds all the unique instances and also filters out the MoA problems
 text_unique <- text %>% 
   distinct(location) %>% 
   filter(!grepl("[0-9]",location)) %>% 
